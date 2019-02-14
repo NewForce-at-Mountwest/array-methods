@@ -3,8 +3,6 @@
 // map()
 // find()
 // reduce()
-// sort()
-
 
 // Each object represents one active customer.It details the address, purchasing agent, and the total dollar amount of that company's last 5 orders.
 const businesses = [
@@ -120,17 +118,150 @@ const businesses = [
   }
 ];
 
+// for(let i = 0; i< businesses.length; i++){
+//   console.log(businesses[i]);
+//   console.log(businesses[i].addressCity)
+// }
+
+// const functionToRunOnLoop = currentBusiness => {
+//   console.log(currentBusiness);
+// };
+
+// businesses.forEach(taco => {
+//   console.log(taco);
+//   document.querySelector("#business-container").innerHTML += `<h3>${taco.companyName}</h3>`
+// });
+
+// const coffeeShopEmployee = {
+//   name: "Ryan",
+//   makeNewDrink: function(){
+//     console.log("I made you a drink!")
+//   }
+// }
+
+// coffeeShopEmployee.makeNewDrink()
+
 // use a .forEach to loop through the businesses and print each one to the DOM
 
 // Use .filter to create a new array of businesses in NY
 
+// const NYBusinesses = businesses.filter(currentBusiness => {
+//   const isItInNY = currentBusiness.addressStateCode === "NY";
+//   console.log(isItInNY);
+//   return isItInNY;
+// })
+
+const NYBusinesses = businesses.filter(
+  currentBusiness => currentBusiness.addressStateCode === "NY"
+);
+
+console.log(NYBusinesses);
+
 // use the .map method to create an array of JUST the purchasing agents
 // .forEach over the purchasing agent array and log each agent to the console
 
+const purchasingAgents = businesses.map(currentBusiness => currentBusiness.purchasingAgent.nameFirst
+)
+
+
+// .filter(singleName => singleName.startsWith("E"))
+
+console.log(purchasingAgents);
+
+
+
 // add a search bar to our HTML file
 // when the user hits enter on the search bar, use a .find method to find a business with a matching name
+document.querySelector("#search-button").addEventListener("click", () => {
+  const searchInput = document.querySelector("#search-field").value;
+  const searchResult = businesses.filter(currentBusiness => currentBusiness.companyName === searchInput)
+  console.log(searchResult);
+})
 
-// let totalOrders = business.orders.reduce(
-//   (currentTotal, nextValue) => currentTotal += nextValue,
-//   0
-// )
+
+
+// ONE: Loop through all of the customer objects using a .forEach loop. Inside that .forEach loop, write another .forEach loop through each customer's order array. Print the price of each order to the console.
+
+// businesses.forEach(currentBusiness => {
+//   currentBusiness.orders.forEach(singleOrder => {
+//     console.log(singleOrder);
+//   })
+// })
+
+
+// TWO: Lightning Exercise: Use filter() to create another array named manufacturingBusinesses that will contain all businesses in the manufacturing industry.Display those to the DOM.
+
+// const manufacturingBusinesses = businesses.filter(currentBusiness => {
+//   return currentBusiness.companyIndustry === "Manufacturing";
+// })
+
+// console.log(manufacturingBusinesses);
+// manufacturingBusinesses.forEach(business => {
+//   document.querySelector("#business-container").innerHTML += `<div>
+//   <h3>${business.companyName}</h3>
+//   <p>${business.companyIndustry}</p>
+//   </div>`
+// })
+
+// THREE: Use .map to return a new object that has the full name of the purchasing agent, the company name, and the phone number.The data structure is shown below.Use that new data structure to display the agent with their company and phone number
+// {
+//   "fullName": "Kaylee Gutkowski",
+//     "company": "Highnix",
+//       "phoneNumber": "235.266.6278"
+// }
+
+const newBusinessData = businesses.map(currentBusiness => {
+  return {
+    "fullName": `${currentBusiness.purchasingAgent.nameFirst} ${currentBusiness.purchasingAgent.nameLast}`,
+    "company": currentBusiness.companyName,
+    "phoneNumber": currentBusiness.phoneWork
+  }
+})
+
+// console.log(newBusinessData)
+
+
+
+// REDUCE
+
+
+const theWordArray = ["The", "cow", "danced", "by", "the", "light", "of", "the", "moon"];
+
+let sentence = "";
+for(let i = 0; i < theWordArray.length; i++){
+  sentence += `${theWordArray[i]} `;
+}
+console.log(sentence);
+
+const theSentence = theWordArray.reduce((theWholeSentence, currentWord) => {
+  return theWholeSentence += ` ${currentWord}`
+})
+
+const numberArray = [1, 2, 3, 4]
+
+const sum = numberArray.reduce((runningTotal, currentValue) => runningTotal *= currentValue)
+
+// console.log(sum);
+
+// console.log(theSentence);
+
+
+// Lightning Exercise 1: Use the reduce method on the following array to determine how much total rain fell last month.
+
+const monthlyRainfall = [23, 13, 27, 20, 20, 31, 33, 26, 19, 12, 14, 12, 10]
+
+const totalRainfall = monthlyRainfall.reduce((runningTotal, currentValue) => {
+  return runningTotal + currentValue;
+})
+
+console.log(totalRainfall)
+// Lightning Exercise 2: Use the reduce method on the following array to build a sentence.
+
+const words = ["The", "quick", "brown", "fox", "jumped", "over", "the", "lazy", "dog"]
+
+const theFinalSentence = words.reduce((sentence, currentWord) => {
+  return sentence + ` ${currentWord}`
+})
+
+console.log(`${theFinalSentence}.`)
+
